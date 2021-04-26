@@ -1,0 +1,153 @@
+1. create database
+
+create database spotifyDB;
+
+2. create table user
+
+mysql> create table user
+    -> (
+    -> id INT unsigned NOT NULL AUTO_INCREMENT,
+    -> name VARCHAR(150) NOT NULL,
+    -> emailId VARCHAR(150) NOT NULL,
+    -> PRIMARY KEY (id),
+    -> )
+    -> ;
+
+3. create table playlist
+mysql> create table playlist
+    -> (
+    -> id INT unsigned NOT NULL,
+    -> playlistName VARCHAR(150) NOT NULL,
+    -> PRIMARY KEY (playlistName),
+    -> FOREIGN KEY (id) REFERENCES user(id)
+    -> )
+    -> ;
+
+4. create table track
+
+mysql> create table track
+    -> (
+    -> playlist VARCHAR(150) NOT NULL,
+    -> track VARCHAR(150) NOT NULL,
+    -> PRIMARY KEY (track),
+    -> FOREIGN KEY (playlist) REFERENCES playlist(playlistName)
+    -> )
+    -> ;
+
+5. Insert data in user table
+
+mysql> INSERT INTO user (name, emailId)
+    -> VALUES ("Samiksha", "shende.samiksha@gmail.com"),
+    -> ("Neha", "nehazade@gamil.com"),
+    -> ("Apurva", "apurvayede@yahoo.com"); 
+
+
+
+mysql> SELECT * FROM user;
++----+----------+---------------------------+
+| id | name     | emailId                   |
++----+----------+---------------------------+
+|  1 | Samiksha | shende.samiksha@gmail.com |
+|  2 | Neha     | nehazade@gamil.com        |
+|  3 | Apurva   | apurvayede@yahoo.com      |
++----+----------+---------------------------+
+
+
+6. Insert data in playlist table
+
+INSERT INTO playlist (id, playlistName)
+    -> VALUES (1, "Bollywood"),
+    -> (1, "Bollywood"),
+    -> (2, "Party Songs"),
+    -> (2, "Hollywood"),
+    -> (3, "Romantic"),
+    -> (3, "Old Songs");
+
+
+
+mysql> SELECT * FROM playlist;
++----+---------------+
+| id | playlistName  |
++----+---------------+
+|  1 | Bollywood     |
+|  1 | Morning Vibes |
+|  2 | Hollywood     |
+|  2 | Party Songs   |
+|  3 | Old Songs     |
+|  3 | Romantic      |
++----+---------------+
+
+
+7. Insert data in table track
+
+mysql> INSERT INTO track (playlist, track)
+    -> VALUES ("Bollywood", "Pehli Nazar Mein");
+    -> ("Bollywood", "Tum Se Hi"),
+    -> ("Bollywood", "Desi Girl");
+    -> ("Hollywood", "Faded"),
+    -> ("Hollywood", "Senorita"),
+    -> ("Hollywood", "Cheap Thrills"),
+    -> ("Party Songs", "Illegal Weapon"),
+    -> ("Party Songs", "Let's Nacho"),
+    -> ("Party Songs", "Saturday Saturday"),
+    -> ("Old Songs", "Pehla Pehla Pyar"),
+    -> ("Old Songs", "Pehla Nasha"),
+    -> ("Old Songs", "Kya Hua Tera Vada"),
+    -> ("Romantic", "Chand Sifarish"),
+    -> ("Romantic", "Tejhe Kitna Chahane Lage");
+    -> ("Romantic", "Duniyaa");
+    -> ("Morning Vibes", "Jeena Jeena"),
+    -> ("Morning Vibes", "Sajdaa"),
+    -> ("Morning Vibes", "Shukran Allah");
+
+
+mysql> SELECT * FROM track;
++---------------+--------------------------+
+| playlist      | track                    |
++---------------+--------------------------+
+| Bollywood     | Desi Girl                |
+| Bollywood     | Pehli Nazar Mein         |
+| Bollywood     | Tum Se Hi                |
+| Hollywood     | Cheap Thrills            |
+| Hollywood     | Faded                    |
+| Hollywood     | Senorita                 |
+| Morning Vibes | Jeena Jeena              |
+| Morning Vibes | Sajdaa                   |
+| Morning Vibes | Shukran Allah            |
+| Old Songs     | Kya Hua Tera Vada        |
+| Old Songs     | Pehla Nasha              |
+| Old Songs     | Pehla Pehla Pyar         |
+| Party Songs   | Illegal Weapon           |
+| Party Songs   | Let's Nacho              |
+| Party Songs   | Saturday Saturday        |
+| Romantic      | Chand Sifarish           |
+| Romantic      | Duniyaa                  |
+| Romantic      | Tejhe Kitna Chahane Lage |
++---------------+--------------------------+
+
+
+8. Retrieve data
+
+mysql> select user.name,playlist.playlistName,track.track from user join playlist on user.id = playlist.id join track on playlist.playlistName = track.playlist;
++----------+---------------+--------------------------+
+| name     | playlistName  | track                    |
++----------+---------------+--------------------------+
+| Samiksha | Bollywood     | Desi Girl                |
+| Samiksha | Bollywood     | Pehli Nazar Mein         |
+| Samiksha | Bollywood     | Tum Se Hi                |
+| Samiksha | Morning Vibes | Jeena Jeena              |
+| Samiksha | Morning Vibes | Sajdaa                   |
+| Samiksha | Morning Vibes | Shukran Allah            |
+| Neha     | Hollywood     | Cheap Thrills            |
+| Neha     | Hollywood     | Faded                    |
+| Neha     | Hollywood     | Senorita                 |
+| Neha     | Party Songs   | Illegal Weapon           |
+| Neha     | Party Songs   | Let's Nacho              |
+| Neha     | Party Songs   | Saturday Saturday        |
+| Apurva   | Old Songs     | Kya Hua Tera Vada        |
+| Apurva   | Old Songs     | Pehla Nasha              |
+| Apurva   | Old Songs     | Pehla Pehla Pyar         |
+| Apurva   | Romantic      | Chand Sifarish           |
+| Apurva   | Romantic      | Duniyaa                  |
+| Apurva   | Romantic      | Tejhe Kitna Chahane Lage |
++----------+---------------+--------------------------+ 
